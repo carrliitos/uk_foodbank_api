@@ -1,0 +1,31 @@
+---
+title: "Food Bank"
+output: 
+  html_notebook:
+    code_folding: show
+    df_print: paged
+    toc: TRUE
+    toc_float: TRUE
+    theme: cosmo
+  pdf_document:
+    df_print: kable
+---
+
+```{r setup, include=FALSE}
+options(knitr.duplicate.label = "allow")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+files <- list.files(pattern = "\\d+.*\\Rmd", recursive = TRUE)
+chunks <- paste0('```{r child ="', files, '"}\n```\n')
+cat(chunks, sep = "\n")
+```
+
+# Project Overview
+A sample API project of a food bank that does not need an API key.
+
+The url to get the API is [here](https://www.givefood.org.uk/api/2/docs/).
+
+```{r child = "01_foodbank.Rmd"}
+```

@@ -1,0 +1,55 @@
+---
+title: "Food Bank API Practice"
+author: "Benzon Carlitos Salazar"
+date: "September 16, 2022"
+---
+
+```{r setup}
+library(magrittr)
+
+base_url <- "https://www.givefood.org.uk/api/2/foodbanks/"
+```
+
+## GET response
+
+Create GET response to call API.
+
+```{r get_response}
+foodbank <- httr::GET(base_url)
+
+if (foodbank$status_code == 200) {
+	print("successful connection")
+}
+```
+
+Viewing the API GET result.
+
+```{r get_result}
+str(foodbank)
+```
+
+Viewing the main source of the data needed from the API - Normally content.
+
+```{r api_content}
+str(foodbank$content)
+```
+
+## Raw content to text
+
+Convert raw `content` to text (in this case, a JSON string)
+
+```{r raw_to_txt}
+# foodbank_content <- rawToChar(foodbank$content)
+foodbank_content <- httr::content(foodbank, as = "text")
+
+foodbank_content_JSON <- jsonlite::fromJSON(foodbank_content, flatten = TRUE)
+```
+
+## Table of all Foodbank
+
+Return a table of all the foodbanks that were in that API pulled through.
+
+```{r table}
+foodbank_content_JSON %>%
+gt::gt()
+```
